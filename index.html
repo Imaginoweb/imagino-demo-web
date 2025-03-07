@@ -134,4 +134,17 @@
                     'Content-Type': 'application/json',
                     'X-API-KEY': apiKey
                 },
-                body: JSON.stringify({ email, firstName, lastName, telephone, optInEmail, optInPush,
+                body: JSON.stringify({ email, firstName, lastName, telephone, optInEmail, optInPush, optInSMS })
+            })
+            .then(response => response.json())
+            .then(() => {
+                document.getElementById('output').innerHTML = '<strong>Votre compte a été mis à jour</strong>';
+            })
+            .catch(error => {
+                document.getElementById('output').innerHTML = `<pre>Erreur: ${error}</pre>`;
+            });
+        }
+    </script>
+
+</body>
+</html>
