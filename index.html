@@ -7,22 +7,22 @@
         body { font-family: Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
         header, footer { padding: 20px; text-align: center; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .container { display: flex; justify-content: center; flex-wrap: wrap; padding: 20px; }
-        .product { background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 15px; padding: 15px; width: 220px; text-align: center; }
-        .product img { width: 100px; height: 100px; object-fit: contain; }
+        .product { background: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 15px; padding: 15px; width: 220px; text-align: center; display: flex; flex-direction: column; }
+        .product img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto; }
+        .product button { margin-top: auto; }
         button { padding: 8px 12px; cursor: pointer; background-color: #5c67f2; color: white; border: none; border-radius: 4px; }
         button:hover { background-color: #4a54e1; }
         .cart { position: fixed; top: 15px; right: 15px; background: #5c67f2; color: white; padding: 10px; border-radius: 4px; }
-        footer { text-align: center; padding: 20px; margin-top: 40px; background-color: #f1f3f6; }
         input { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #ccc; }
         .optins { margin: 10px; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <img src="logo.png" alt="Imagino Logo" style="width: 150px;">
+<header>
+    <img src="logo.png" alt="Imagino Logo" style="width: 250px;">
     <h1>Boutique Imagino 🛍️</h1>
-</div>
+</header>
 
 <div class="cart">🛒 Panier : <span id="cartCount">0</span></div>
 
@@ -38,14 +38,14 @@
         <img src="campaign.png" alt="Imagino Campaign">
         <h3>Imagino Campaign</h3>
         <p>La nouvelle offre de Campaign Management pour les entreprises. Maintenant.</p>
-        <button onclick="addToCart('Imagino Campaign')">Ajouter au panier</button>
+        <button onclick="ajouterAuPanier('Imagino Campaign')">Ajouter au panier</button>
     </div>
 
     <div class="product">
         <img src="cachan.png" alt="Déjeuner à Cachan">
         <h3>Déjeuner à Cachan</h3>
         <p>Déjeuner convivial à Cachan.</p>
-        <button onclick="addToCart('Déjeuner à Cachan')">Ajouter au panier</button>
+        <button onclick="ajouterAuPanier('Déjeuner à Cachan')">Ajouter au panier</button>
     </div>
 </div>
 
@@ -67,10 +67,11 @@
 </footer>
 
 <script>
-    let cartCount = 0;
-    function addToCart(produit) {
-        cartCount.innerText = parseInt(cartCount.innerText) + 1;
-        alert(produit + ' ajouté au panier !');
+    let panier = [];
+
+    function ajouterAuPanier(produit) {
+        panier.push(produit);
+        document.getElementById('cartCount').innerText = panier.length;
     }
 
     const apiKey = '2a79b8c4-b270-4a61-8b64-437ccea75586';
@@ -93,8 +94,6 @@
         .then(() => document.getElementById('output').innerHTML = 'Inscription réussie !');
     }
 </script>
-
-</footer>
 
 </body>
 </html>
