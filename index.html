@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Recherche Profil Imagino</title>
+    <title>Recherche de profil Imagino 🔍</title>
     <style>
         body { font-family: Arial, sans-serif; }
         button { padding: 8px 12px; cursor: pointer; }
@@ -13,16 +13,16 @@
 <body>
     <h1>Recherche de profil Imagino 🔍</h1>
 
-    <input type="text" id="nom" placeholder="Entrer le NOM">
+    <input type="text" id="email" placeholder="Entrer l'Email">
     <button onclick="rechercherProfil()">Rechercher</button>
 
     <div id="output"></div>
 
     <script>
         function rechercherProfil() {
-            const nom = document.getElementById('nom').value;
+            const email = document.getElementById('email').value;
 
-            fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?lastName=${encodeURIComponent(nom)}`, {
+            fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?exact_email=${encodeURIComponent(email)}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,5 +38,6 @@
             });
         }
     </script>
+
 </body>
 </html>
