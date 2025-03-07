@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Demo Imagino - Recherche Profil</title>
+    <title>Recherche Profil Imagino</title>
     <style>
         body { font-family: Arial, sans-serif; }
         button { padding: 8px 12px; cursor: pointer; }
@@ -22,14 +22,13 @@
         function rechercherProfil() {
             const nom = document.getElementById('nom').value;
 
-           fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/1/RCU?exact_lastName=${encodeURIComponent(nom)}`, {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-Api-Key': '2a79b8c4-b270-4a61-8b64-437ccea75586'
-    }
-})
-
+            fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?lastName=${encodeURIComponent(nom)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-API-KEY': '2a79b8c4-b270-4a61-8b64-437ccea75586'
+                }
+            })
             .then(response => response.json())
             .then(data => {
                 document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
