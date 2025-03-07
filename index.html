@@ -22,7 +22,7 @@
         function rechercherProfil() {
             const nom = document.getElementById('nom').value;
 
-           fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/1/RCU?lastName=${encodeURIComponent(nom)}`, {
+           fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/1/RCU?exact_lastName=${encodeURIComponent(nom)}`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
