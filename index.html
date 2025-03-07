@@ -9,11 +9,18 @@
         .container { display: flex; justify-content: center; flex-wrap: wrap; padding: 20px; }
         .product { background: #fff; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 15px; padding: 15px; width: 220px; text-align: center; display: flex; flex-direction: column; }
         .product img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto; }
+        .product button { margin-top: auto; }
         button { padding: 8px 12px; cursor: pointer; background-color: #5c67f2; color: white; border: none; border-radius: 4px; }
         button:hover { background-color: #4a54e1; }
         .cart { position: fixed; top: 15px; right: 15px; background: #5c67f2; color: white; padding: 10px; border-radius: 4px; cursor: pointer; }
         .cart-items-preview { display: none; position: absolute; right: 0; top: 40px; background: #fff; color: black; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 10; }
         .cart:hover .cart-items-preview { display: block; }
+        input { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #ccc; }
+        .optins { margin: 10px; }
+        a { color: white; text-decoration: none; }
+        .hp { text-align: center; padding: 20px; }
+        .footer-columns { display: flex; justify-content: space-around; padding: 20px; background-color: #fff; }
+        .footer-columns div { text-align: left; }
     </style>
 </head>
 <body>
@@ -30,50 +37,87 @@
 
 <div class="container">
     <div class="product">
-        <img src="cdp.png">
+        <img src="cdp.png" alt="CDP Imagino">
         <h3>Customer Data Platform</h3>
+        <p>Une CDP flexible et puissante.</p>
         <strong>99€</strong>
-        <button onclick="ajouterAuPanier('Customer Data Platform',99,'cdp.png')">Ajouter</button>
+        <button onclick="ajouterAuPanier('CDP Imagino', 99, 'cdp.png')">Ajouter au panier</button>
     </div>
 
     <div class="product">
-        <img src="campaign.png">
+        <img src="campaign.png" alt="Imagino Campaign">
         <h3>Imagino Campaign</h3>
+        <p>La nouvelle offre de Campaign Management.</p>
         <strong>149€</strong>
-        <button onclick="ajouterAuPanier('Imagino Campaign',149,'campaign.png')">Ajouter</button>
+        <button onclick="ajouterAuPanier('Imagino Campaign', 149, 'campaign.png')">Ajouter au panier</button>
     </div>
 
     <div class="product">
-        <img src="cachan.png">
+        <img src="cachan.png" alt="Déjeuner à Cachan">
         <h3>Déjeuner à Cachan</h3>
+        <p>Déjeuner convivial à Cachan.</p>
         <strong>29€</strong>
-        <button onclick="ajouterAuPanier('Déjeuner à Cachan',29,'cachan.png')">Ajouter</button>
+        <button onclick="ajouterAuPanier('Déjeuner à Cachan', 29, 'cachan.png')">Ajouter au panier</button>
+    </div>
+</div>
+<!-- Formulaire d'inscription -->
+<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
+    <h2>Inscription à la newsletter 📧</h2>
+    <form id="newsletterForm">
+        <input type="text" placeholder="Prénom" id="prenom" required>
+        <input type="text" placeholder="Nom" id="nom" required>
+        <input type="email" placeholder="Email" id="email" required>
+        <div class="optins">
+            <label><input type="checkbox" id="optinEmail"> Opt-in Email</label>
+            <label><input type="checkbox" id="optinSMS"> Opt-in SMS</label>
+            <label><input type="checkbox" id="optinPush"> Opt-in Push Notification</label>
+        </div>
+        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
+    </form>
+    <div id="messageInscription"></div>
+</div>
+
+<div id="partnersList" class="hp">
+    <h4>Découvrez les clients qui nous font déjà confiance</h4>
+    <div class="container">
+        <div class="postList">
+            <img src="https://imagino.com/wp-content/uploads/2022/07/7-150x150.png" alt="Schmidt Groupe">
+            <img src="https://imagino.com/wp-content/uploads/2022/04/Logo-500-x-500-Shopix-150x150.png" alt="Shopix">
+            <img src="https://imagino.com/wp-content/uploads/2022/07/6-150x150.png" alt="Val d'Isère">
+        </div>
+        <div class="text-center my-5">
+            <a href="https://imagino.com/fr/references/clients/" class="btn btn-primary blue outline">Découvrir</a>
+        </div>
     </div>
 </div>
 
-<script>
-let panier = JSON.parse(localStorage.getItem('panier') || '[]');
-
-function ajouterAuPanier(nom,prix,image){
-    panier.push({nom,prix,image});
-    localStorage.setItem('panier',JSON.stringify(panier));
-    afficherPanier();
-}
-
-function afficherPanier(){
-    let preview = document.getElementById('cartPreview');
-    preview.innerHTML='';
-    let total=0;
-    panier.forEach(p=>{
-        preview.innerHTML+=`<div>${p.nom} (${p.prix}€)</div>`;
-        total+=p.prix;
-    });
-    preview.innerHTML+=`<div><strong>Total: ${total}€</strong></div>`;
-    document.getElementById('cartCount').innerText=panier.length;
-}
-
-afficherPanier();
-</script>
+<footer>
+    <div class="footer-columns">
+        <div>
+            <img src="logo.png" alt="Imagino Logo" style="width:150px;">
+            <p>+33 (0)1 84 04 09 00</p>
+            <p>45-47 avenue Carnot<br>94230 Cachan<br>France</p>
+        </div>
+        <div>
+            <strong>SOLUTIONS</strong>
+            <p>Customer data platform<br>Imagino Campaign</p>
+        </div>
+        <div>
+            <strong>RÉFÉRENCES</strong>
+            <p>Clients<br>Partenaires<br>Équipe Métier<br>Équipe IT DATA</p>
+        </div>
+        <div>
+            <strong>L’ENTREPRISE</strong>
+            <p>imagino & innovation<br>Nous rejoindre<br>L'équipe</p>
+            <strong>ÉVÈNEMENTS</strong>
+        </div>
+        <div>
+            <strong>RESSOURCES</strong>
+            <p>Contenus<br>Vidéos<br>Dans la presse</p>
+            <strong>CONTACTEZ-NOUS</strong>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>
