@@ -2,42 +2,32 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Demo Imagino - Boutique</title>
+    <title>Demo Imagino - Recherche Profil</title>
     <style>
         body { font-family: Arial, sans-serif; }
-        .product { border: 1px solid #ddd; padding: 10px; margin: 10px; width: 200px; display: inline-block; }
         button { padding: 8px 12px; cursor: pointer; }
+        input { padding: 6px; margin-right: 8px; }
         #output { margin-top: 20px; }
     </style>
 </head>
 <body>
-    <h1>Boutique Démo Imagino 🛒</h1>
+    <h1>Recherche de profil Imagino 🔍</h1>
 
-    <div>
-        <div>
-            <h3>Produit 1</h3>
-            <button onclick="sendEvent('product_view', 'Produit A')">Voir le produit</button>
-            <button onclick="sendEvent('add_to_cart', 'Produit A')">Ajouter au panier</button>
-        </div>
-        <div>
-            <h3>Produit B</h3>
-            <button onclick="sendEvent('product_view', 'Produit B')">Voir le produit</button>
-            <button onclick="sendEvent('add_to_cart', 'Produit B')">Ajouter au panier</button>
-        </div>
-        <div>
-            <h3>Validation de commande</h3>
-            <button onclick="sendEvent('purchase', 'Commande #1234')">Valider l'achat</button>
-        </div>
-    </div>
+    <input type="text" id="nom" placeholder="Entrer le NOM">
+    <button onclick="rechercherProfil()">Rechercher</button>
 
     <div id="output"></div>
 
     <script>
-        function sendEvent(action, product) {
-            fetch("https://demo-api.imagino.com/event", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ event: action, item: product, userId: "user_demo_123" })
+        function rechercherProfil() {
+            const nom = document.getElementById('nom').value;
+
+            fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/1/RCU?nom=${encodeURIComponent(nom)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer 2a79b8c4-b270-4a61-8b64-437ccea75586'
+                }
             })
             .then(response => response.json())
             .then(data => {
