@@ -2,80 +2,93 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Panier Imagino 🛒</title>
+    <title>Boutique Imagino 🛒</title>
     <style>
         body { font-family: Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
         header, footer { padding: 20px; text-align: center; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .container { padding: 20px; max-width: 800px; margin: auto; }
-        .cart-item { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 10px; margin: 10px 0; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-        .cart-item img { width: 80px; height: 80px; object-fit: contain; }
-        .cart-item-details { flex: 1; margin-left: 15px; text-align: left; }
-        .cart-item-price { width: 100px; text-align: right; }
-        .total { text-align: right; font-size: 1.2em; margin-top: 20px; }
+        .container { display: flex; justify-content: center; flex-wrap: wrap; padding: 20px; }
+        .product { background: #fff; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 15px; padding: 15px; width: 220px; text-align: center; display: flex; flex-direction: column; }
+        .product img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto; }
+        .product button { margin-top: auto; }
         button { padding: 8px 12px; cursor: pointer; background-color: #5c67f2; color: white; border: none; border-radius: 4px; }
         button:hover { background-color: #4a54e1; }
+        .cart { position: fixed; top: 15px; right: 15px; background: #5c67f2; color: white; padding: 10px; border-radius: 4px; cursor: pointer; }
+        .cart-items-preview { display: none; position: absolute; right: 0; top: 40px; background: #fff; color: black; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 10; }
+        .cart:hover .cart-items-preview { display: block; }
+        input { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #ccc; }
+        .optins { margin: 10px; }
+        a { color: white; text-decoration: none; }
+        .hp { text-align: center; padding: 20px; }
     </style>
 </head>
 <body>
 
 <header>
     <img src="logo.png" alt="Imagino Logo" style="width: 250px;">
-    <h1>Votre Panier 🛒</h1>
+    <h1>Boutique Imagino 🛍️</h1>
 </header>
 
+<div class="cart">
+    <a href="panier.html">🛒 Panier : <span id="cartCount">0</span></a>
+    <div class="cart-items-preview" id="cartPreview"></div>
+</div>
+
 <div class="container">
-    <div id="cartItems"></div>
-    <div class="total">Total : <span id="cartTotal">0</span>€</div>
-    <button onclick="confirmerCommande()">Confirmer la commande</button>
+    <div class="product">
+        <img src="cdp.png" alt="CDP Imagino">
+        <h3>Customer Data Platform</h3>
+        <p>Une CDP flexible et puissante.</p>
+        <strong>99€</strong>
+        <button onclick="ajouterAuPanier('CDP Imagino')">Ajouter au panier</button>
+    </div>
+
+    <div class="product">
+        <img src="campaign.png" alt="Imagino Campaign">
+        <h3>Imagino Campaign</h3>
+        <p>La nouvelle offre de Campaign Management.</p>
+        <strong>149€</strong>
+        <button onclick="ajouterAuPanier('Imagino Campaign')">Ajouter au panier</button>
+    </div>
+
+    <div class="product">
+        <img src="cachan.png" alt="Déjeuner à Cachan">
+        <h3>Déjeuner à Cachan</h3>
+        <p>Déjeuner convivial à Cachan.</p>
+        <strong>29€</strong>
+        <button onclick="ajouterAuPanier('Déjeuner à Cachan')">Ajouter au panier</button>
+    </div>
+</div>
+
+<div id="partnersList" class="hp">
+    <h4>Découvrez les clients qui nous font déjà confiance</h4>
+    <div class="container">
+        <div class="postList">
+            <img src="https://imagino.com/wp-content/uploads/2022/07/7-150x150.png" alt="Schmidt Groupe">
+            <img src="https://imagino.com/wp-content/uploads/2022/04/Logo-500-x-500-Shopix-150x150.png" alt="Shopix">
+            <img src="https://imagino.com/wp-content/uploads/2022/07/6-150x150.png" alt="Val d'Isère">
+        </div>
+        <div class="text-center my-5">
+            <a href="https://imagino.com/fr/references/clients/" class="btn btn-primary blue outline">Découvrir</a>
+        </div>
+    </div>
 </div>
 
 <footer>
-    <p>Merci pour votre visite chez Imagino !</p>
+    <h3>Inscription Newsletter 📩</h3>
+    <input type="email" id="email" placeholder="Votre Email">
+    <input type="text" id="firstName" placeholder="Prénom">
+    <input type="text" id="lastName" placeholder="Nom">
+    <input type="text" id="telephone" placeholder="Téléphone">
+
+    <div class="optins">
+        <label><input type="checkbox" id="optInEmail"> Email</label>
+        <label><input type="checkbox" id="optInPush"> Push</label>
+        <label><input type="checkbox" id="optInSMS"> SMS</label>
+    </div>
+
+    <button onclick="inscrireUtilisateur()">S'inscrire</button>
+    <div id="output"></div>
 </footer>
-
-<script>
-    const produits = {
-        "CDP Imagino": { "img": "cdp.png", "desc": "Une CDP flexible et puissante pour déployer rapidement vos cas d’usage.", "prix": 99 },
-        "Imagino Campaign": { "img": "campaign.png", "desc": "La nouvelle offre de Campaign Management pour les entreprises.", "prix": 149 },
-        "Déjeuner à Cachan": { "img": "cachan.png", "desc": "Déjeuner convivial à Cachan.", "prix": 29 }
-    };
-
-    const panier = JSON.parse(localStorage.getItem('panier') || '[]');
-
-    function afficherPanier() {
-        const cartItems = document.getElementById('cartItems');
-        cartItems.innerHTML = '';
-        let total = 0;
-
-        panier.forEach(item => {
-            const produit = produits[item];
-            total += produit.prix;
-
-            const itemEl = document.createElement('div');
-            itemEl.className = 'cart-item';
-            itemEl.innerHTML = `
-                <img src="${produit.img}" alt="${item}">
-                <div class="cart-item-details">
-                    <strong>${item}</strong>
-                    <p>${produit.desc}</p>
-                </div>
-                <div class="cart-item-price">${produit.prix}€</div>
-            `;
-
-            cartItems.appendChild(itemEl);
-        });
-
-        document.getElementById('cartTotal').innerText = total;
-    }
-
-    function confirmerCommande() {
-        alert('Commande confirmée ! Merci pour votre achat.');
-        localStorage.clear();
-        window.location.href = 'confirmation.html';
-    }
-
-    afficherPanier();
-</script>
 
 </body>
 </html>
