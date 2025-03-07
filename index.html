@@ -2,45 +2,51 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Démo API Imagino</title>
+    <title>Demo Imagino - Boutique</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .product { border: 1px solid #ddd; padding: 10px; margin: 10px; width: 200px; display: inline-block; }
+        button { padding: 8px 12px; cursor: pointer; }
+        #output { margin-top: 20px; }
+    </style>
 </head>
 <body>
-    <h1>Démo Imagino API 🚀</h1>
+    <h1>Boutique Démo Imagino 🛒</h1>
 
-    <button id="signup">Inscription</button>
-    <button id="purchase">Achat</button>
-    <button id="cart-abandon">Panier abandonné</button>
+    <div>
+        <div>
+            <h3>Produit 1</h3>
+            <button onclick="sendEvent('product_view', 'Produit A')">Voir le produit</button>
+            <button onclick="sendEvent('add_to_cart', 'Produit A')">Ajouter au panier</button>
+        </div>
+        <div>
+            <h3>Produit B</h3>
+            <button onclick="sendEvent('product_view', 'Produit B')">Voir le produit</button>
+            <button onclick="sendEvent('add_to_cart', 'Produit B')">Ajouter au panier</button>
+        </div>
+        <div>
+            <h3>Validation de commande</h3>
+            <button onclick="sendEvent('purchase', 'Commande #1234')">Valider l'achat</button>
+        </div>
+    </div>
 
-    <div id="result"></div>
+    <div id="output"></div>
 
     <script>
-    const resultDiv = document.getElementById('result');
-
-    async function sendEvent(action) {
-        try {
-            const response = await fetch("https://demo-api.imagino.com/event", {
+        function sendEvent(action, product) {
+            fetch("https://demo-api.imagino.com/event", {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    event: action,
-                    userId: "user_demo_123"
-                })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ event: action, item: product, userId: "user_demo_123" })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(error => {
+                document.getElementById('output').innerHTML = `<pre>Erreur: ${error}</pre>`;
             });
-
-            if(response.ok) {
-                const data = await response.json();
-                resultDiv.innerHTML = `<pre>✅ Succès : ${JSON.stringify(data, null, 2)}</pre>`;
-            } else {
-                resultDiv.innerHTML = `<pre>❌ Erreur : ${response.statusText}</pre>`;
-            }
-        } catch (error) {
-            resultDiv.innerHTML = `<pre>❌ Erreur : ${error.message}</pre>`;
         }
-    }
-
-    document.getElementById('signup').onclick = () => sendEvent('signup');
-    document.getElementById('purchase').onclick = () => sendEvent('purchase');
-    document.getElementById('cart-abandon').onclick = () => sendEvent('cart_abandon');
     </script>
 </body>
 </html>
