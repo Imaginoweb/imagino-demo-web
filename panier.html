@@ -6,13 +6,14 @@
     <style>
         body { font-family: Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
         header, footer { padding: 20px; text-align: center; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .container { padding: 20px; text-align: center; }
+        .container { padding: 20px; max-width: 800px; margin: auto; }
+        .cart-item { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 10px; margin: 10px 0; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .cart-item img { width: 80px; height: 80px; object-fit: contain; }
+        .cart-item-details { flex: 1; margin-left: 15px; text-align: left; }
+        .cart-item-price { width: 100px; text-align: right; }
+        .total { text-align: right; font-size: 1.2em; margin-top: 20px; }
         button { padding: 8px 12px; cursor: pointer; background-color: #5c67f2; color: white; border: none; border-radius: 4px; }
         button:hover { background-color: #4a54e1; }
-        input { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #ccc; }
-        .optins { margin: 10px; }
-        ul { list-style-type: none; padding: 0; }
-        li { margin: 5px 0; padding: 5px; background: #fff; border-radius: 4px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -23,62 +24,54 @@
 </header>
 
 <div class="container">
-    <ul id="listePanier"></ul>
-    <button onclick="viderPanier()">Vider le Panier</button>
+    <div id="cartItems"></div>
+    <div class="total">Total : <span id="cartTotal">0</span>€</div>
+    <button onclick="confirmerCommande()">Confirmer la commande</button>
 </div>
 
 <footer>
-    <h3>Inscription Newsletter 📩</h3>
-    <input type="email" id="email" placeholder="Votre Email">
-    <input type="text" id="firstName" placeholder="Prénom">
-    <input type="text" id="lastName" placeholder="Nom">
-    <input type="text" id="telephone" placeholder="Téléphone">
-
-    <div class="optins">
-        <label><input type="checkbox" id="optInEmail"> Email</label>
-        <label><input type="checkbox" id="optInPush"> Push</label>
-        <label><input type="checkbox" id="optInSMS"> SMS</label>
-    </div>
-
-    <button onclick="inscrireUtilisateur()">S'inscrire</button>
-    <div id="output"></div>
+    <p>Merci pour votre visite chez Imagino !</p>
 </footer>
 
 <script>
+    const produits = {
+        "CDP Imagino": { "img": "cdp.png", "desc": "Une CDP flexible et puissante pour déployer rapidement vos cas d’usage.", "prix": 99 },
+        "Imagino Campaign": { "img": "campaign.png", "desc": "La nouvelle offre de Campaign Management pour les entreprises.", "prix": 149 },
+        "Déjeuner à Cachan": { "img": "cachan.png", "desc": "Déjeuner convivial à Cachan.", "prix": 29 }
+    };
+
     const panier = JSON.parse(localStorage.getItem('panier') || '[]');
 
     function afficherPanier() {
-        const listePanier = document.getElementById('listePanier');
-        listePanier.innerHTML = '';
-        panier.forEach(produit => {
-            const li = document.createElement('li');
-            li.textContent = produit;
-            listePanier.appendChild(li);
+        const cartItems = document.getElementById('cartItems');
+        cartItems.innerHTML = '';
+        let total = 0;
+
+        panier.forEach(item => {
+            const produit = produits[item];
+            total += produit.prix;
+
+            const itemEl = document.createElement('div');
+            itemEl.className = 'cart-item';
+            itemEl.innerHTML = `
+                <img src="${produit.img}" alt="${item}">
+                <div class="cart-item-details">
+                    <strong>${item}</strong>
+                    <p>${produit.desc}</p>
+                </div>
+                <div class="cart-item-price">${produit.prix}€</div>
+            `;
+
+            cartItems.appendChild(itemEl);
         });
+
+        document.getElementById('cartTotal').innerText = total;
     }
 
-    function viderPanier() {
-        localStorage.removeItem('panier');
-        afficherPanier();
-    }
-
-    function inscrireUtilisateur() {
-        const apiKey = '2a79b8c4-b270-4a61-8b64-437ccea75586';
-        const email = document.getElementById('email').value;
-        const firstName = document.getElementById('firstName').value;
-        const lastName = document.getElementById('lastName').value;
-        const telephone = document.getElementById('telephone').value;
-        const optInEmail = document.getElementById('optInEmail').checked;
-        const optInPush = document.getElementById('optInPush').checked;
-        const optInSMS = document.getElementById('optInSMS').checked;
-
-        fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-API-KEY': apiKey },
-            body: JSON.stringify({ email, firstName, lastName, telephone, optInEmail, optInPush, optInSMS })
-        })
-        .then(response => response.json())
-        .then(() => document.getElementById('output').innerHTML = 'Inscription réussie !');
+    function confirmerCommande() {
+        alert('Commande confirmée ! Merci pour votre achat.');
+        localStorage.clear();
+        window.location.href = 'confirmation.html';
     }
 
     afficherPanier();
