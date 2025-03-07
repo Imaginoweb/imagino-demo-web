@@ -22,13 +22,14 @@
         function rechercherProfil() {
             const nom = document.getElementById('nom').value;
 
-            fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/1/RCU?nom=${encodeURIComponent(nom)}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer 2a79b8c4-b270-4a61-8b64-437ccea75586'
-                }
-            })
+           fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/1/RCU?nom=${encodeURIComponent(nom)}`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Api-Key': '2a79b8c4-b270-4a61-8b64-437ccea75586'
+    }
+})
+
             .then(response => response.json())
             .then(data => {
                 document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
