@@ -18,10 +18,31 @@
         input { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #ccc; }
         .optins { margin: 10px; }
         a { color: white; text-decoration: none; }
-        .hp { text-align: center; padding: 20px; }
-        .footer-columns { display: flex; justify-content: space-around; padding: 20px; background-color: #fff; }
-        .footer-columns div { text-align: left; }
+        hr { border: none; border-top: 2px solid #ccc; margin: 20px auto; width: 80%; }
     </style>
+    <script>
+        let panier = [];
+
+        function ajouterAuPanier(nom, prix, image) {
+            panier.push({nom, prix, image});
+            afficherPanier();
+        }
+
+        function afficherPanier() {
+            document.getElementById('cartCount').textContent = panier.length;
+            let preview = panier.map(item => `<div>${item.nom} - ${item.prix}€</div>`).join('');
+            document.getElementById('cartPreview').innerHTML = preview;
+        }
+
+        function viderPanier() {
+            panier = [];
+            afficherPanier();
+        }
+
+        function inscrireUtilisateur() {
+            document.getElementById('messageInscription').innerText = 'Merci pour votre inscription !';
+        }
+    </script>
 </head>
 <body>
 
@@ -40,7 +61,7 @@
         <img src="cdp.png" alt="CDP Imagino">
         <h3>Customer Data Platform</h3>
         <p>Une CDP flexible et puissante.</p>
-        <strong>99€</strong>
+        <strong style="margin-top:auto;">99€</strong>
         <button onclick="ajouterAuPanier('CDP Imagino', 99, 'cdp.png')">Ajouter au panier</button>
     </div>
 
@@ -48,7 +69,7 @@
         <img src="campaign.png" alt="Imagino Campaign">
         <h3>Imagino Campaign</h3>
         <p>La nouvelle offre de Campaign Management.</p>
-        <strong>149€</strong>
+        <strong style="margin-top:auto;">149€</strong>
         <button onclick="ajouterAuPanier('Imagino Campaign', 149, 'campaign.png')">Ajouter au panier</button>
     </div>
 
@@ -56,51 +77,36 @@
         <img src="cachan.png" alt="Déjeuner à Cachan">
         <h3>Déjeuner à Cachan</h3>
         <p>Déjeuner convivial à Cachan.</p>
-        <strong>29€</strong>
+        <strong style="margin-top:auto;">29€</strong>
         <button onclick="ajouterAuPanier('Déjeuner à Cachan', 29, 'cachan.png')">Ajouter au panier</button>
     </div>
 </div>
 
-<div id="partnersList" class="hp">
-    <h4>Découvrez les clients qui nous font déjà confiance</h4>
-    <div class="container">
-        <div class="postList">
-            <img src="https://imagino.com/wp-content/uploads/2022/07/7-150x150.png" alt="Schmidt Groupe">
-            <img src="https://imagino.com/wp-content/uploads/2022/04/Logo-500-x-500-Shopix-150x150.png" alt="Shopix">
-            <img src="https://imagino.com/wp-content/uploads/2022/07/6-150x150.png" alt="Val d'Isère">
+<hr>
+<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
+    <h2>Inscription à la newsletter 📧</h2>
+    <p>Inscrivez-vous à notre NL et gagnez un workspace!</p>
+    <form id="newsletterForm">
+        <input type="text" placeholder="Prénom" id="prenom" required>
+        <input type="text" placeholder="Nom" id="nom" required>
+        <input type="email" placeholder="Email" id="email" required>
+        <div class="optins">
+            <label><input type="checkbox" id="optinEmail"> Opt-in Email</label>
+            <label><input type="checkbox" id="optinSMS"> Opt-in SMS</label>
+            <label><input type="checkbox" id="optinPush"> Opt-in Push Notification</label>
         </div>
-        <div class="text-center my-5">
-            <a href="https://imagino.com/fr/references/clients/" class="btn btn-primary blue outline">Découvrir</a>
-        </div>
-    </div>
+        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
+    </form>
+    <div id="messageInscription"></div>
+</div>
+<hr>
+
+<div style="text-align:center; margin:20px;">
+    <button onclick="viderPanier()">Vider le panier</button>
 </div>
 
 <footer>
-    <div class="footer-columns">
-        <div>
-            <img src="logo.png" alt="Imagino Logo" style="width:150px;">
-            <p>+33 (0)1 84 04 09 00</p>
-            <p>45-47 avenue Carnot<br>94230 Cachan<br>France</p>
-        </div>
-        <div>
-            <strong>SOLUTIONS</strong>
-            <p>Customer data platform<br>Imagino Campaign</p>
-        </div>
-        <div>
-            <strong>RÉFÉRENCES</strong>
-            <p>Clients<br>Partenaires<br>Équipe Métier<br>Équipe IT DATA</p>
-        </div>
-        <div>
-            <strong>L’ENTREPRISE</strong>
-            <p>imagino & innovation<br>Nous rejoindre<br>L'équipe</p>
-            <strong>ÉVÈNEMENTS</strong>
-        </div>
-        <div>
-            <strong>RESSOURCES</strong>
-            <p>Contenus<br>Vidéos<br>Dans la presse</p>
-            <strong>CONTACTEZ-NOUS</strong>
-        </div>
-    </div>
+  <p>© Imagino – Tous droits réservés</p>
 </footer>
 
 </body>
