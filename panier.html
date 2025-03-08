@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>Votre Panier 🛒</title>
     <style>
-        body { font-family: Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
+        body { font-family: 'Poppins', Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
         header, footer { padding: 20px; text-align: center; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .cart-container { width: 60%; margin: auto; background: #fff; padding: 20px; border-radius: 8px; }
         img { width: 60px; height: 60px; object-fit: contain; }
         table { width: 100%; }
         th, td { padding: 10px; text-align: left; }
-        button { padding: 10px; background-color: #5c67f2; color:white; border:none; border-radius:4px; cursor:pointer; }
+        button { padding: 10px; background-color: #6D28D9; color:white; border:none; border-radius:4px; cursor:pointer; }
+        .remove-btn { background-color: red; }
     </style>
 </head>
 <body>
@@ -27,6 +28,7 @@
                 <th>Produit</th>
                 <th>Description</th>
                 <th>Prix (€)</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody id="panierItems"></tbody>
@@ -37,7 +39,7 @@
             </tr>
         </tfoot>
     </table>
-    <button onclick="location.href='confirmation.html'">Confirmer la commande</button>
+    <button onclick="localStorage.clear(); location.reload();">Vider le panier</button>
 </div>
 
 <script>
@@ -45,17 +47,24 @@ let panier = JSON.parse(localStorage.getItem('panier') || '[]');
 let container = document.getElementById('panierItems');
 let total = 0;
 
-panier.forEach(p => {
-    total+=p.prix;
+panier.forEach((p, index) => {
+    total += p.prix;
     container.innerHTML += `
         <tr>
             <td><img src="${p.image}"></td>
             <td>${p.nom}</td>
             <td>${p.prix}€</td>
+            <td><button class="remove-btn" onclick="supprimerArticle(${index})">❌</button></td>
         </tr>`;
 });
 
 document.getElementById('totalPrix').innerText = total + "€";
+
+function supprimerArticle(index) {
+    panier.splice(index, 1);
+    localStorage.setItem('panier', JSON.stringify(panier));
+    location.reload();
+}
 </script>
 
 <footer>
