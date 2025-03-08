@@ -14,18 +14,16 @@
         button { padding: 8px 12px; cursor: pointer; background-color: #6D28D9; color: white; border: none; border-radius: 4px; }
         button:hover { background-color: #5a21b6; }
         .cart { position: fixed; top: 15px; right: 15px; background: #6D28D9; color: white; padding: 10px; border-radius: 4px; cursor: pointer; }
-        .cart-items-preview { display: none; position: absolute; right: 0; top: 40px; background: #fff; color: black; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 10; }
+        .cart-items-preview { display: none; position: absolute; right: 0; top: 40px; background: #fff; color: black; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 10; width: 250px; }
         .cart:hover .cart-items-preview { display: block; }
-        input { padding: 8px; margin: 5px; border-radius: 4px; border: 1px solid #ccc; }
-        .optins { margin: 10px; }
-        a { color: white; text-decoration: none; }
-        hr { border: none; border-top: 2px solid #ccc; margin: 20px auto; width: 80%; }
+        .cart-item { display: flex; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px solid #ddd; }
+        .cart-item img { width: 40px; height: 40px; object-fit: contain; }
     </style>
     <script>
         let panier = JSON.parse(localStorage.getItem('panier') || '[]');
 
         function ajouterAuPanier(nom, prix, image) {
-            panier.push({nom, prix, image});
+            panier.push({ nom, prix, image });
             localStorage.setItem('panier', JSON.stringify(panier));
             afficherPanier();
             alert(`${nom} a été ajouté au panier !`);
@@ -33,18 +31,13 @@
 
         function afficherPanier() {
             document.getElementById('cartCount').textContent = panier.length;
-            let preview = panier.map(item => `<div>${item.nom} - ${item.prix}€</div>`).join('');
-            document.getElementById('cartPreview').innerHTML = preview;
-        }
-
-        function inscrireUtilisateur() {
-            let email = document.getElementById('email').value;
-            if (!email.includes('@')) {
-                alert("Veuillez entrer un email valide !");
-                return;
-            }
-            localStorage.setItem('newsletter', email);
-            alert("Merci pour votre inscription !");
+            let preview = panier.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.nom}">
+                    <div>${item.nom} - ${item.prix}€</div>
+                </div>
+            `).join('');
+            document.getElementById('cartPreview').innerHTML = preview || "<p>Panier vide</p>";
         }
 
         document.addEventListener('DOMContentLoaded', afficherPanier);
@@ -64,42 +57,13 @@
 
 <div class="container">
     <div class="product">
-        <img src="cdp.png" alt="CDP Imagino">
-        <h3>Customer Data Platform</h3>
-        <p>Une CDP flexible et puissante.</p>
-        <strong style="margin-top:auto;">99€</strong>
-        <button onclick="ajouterAuPanier('CDP Imagino', 99, 'cdp.png')">Ajouter au panier</button>
-    </div>
-
-    <div class="product">
-        <img src="campaign.png" alt="Imagino Campaign">
-        <h3>Imagino Campaign</h3>
-        <p>La nouvelle offre de Campaign Management.</p>
-        <strong style="margin-top:auto;">149€</strong>
-        <button onclick="ajouterAuPanier('Imagino Campaign', 149, 'campaign.png')">Ajouter au panier</button>
+        <img src="cachan.png" alt="Petit Déjeuner">
+        <h3>Petit Déjeuner</h3>
+        <p>Un délicieux petit déjeuner à Cachan.</p>
+        <strong>29€</strong>
+        <button onclick="ajouterAuPanier('Petit Déjeuner', 29, 'cachan.png')">Ajouter au panier</button>
     </div>
 </div>
-
-<hr>
-
-<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
-    <h2>Inscription à la newsletter 📧</h2>
-    <p>Inscrivez-vous à notre NL et gagnez un workspace!</p>
-    <form id="newsletterForm">
-        <input type="text" placeholder="Prénom" id="prenom" required>
-        <input type="text" placeholder="Nom" id="nom" required>
-        <input type="email" placeholder="Email" id="email" required>
-        <div class="optins">
-            <label><input type="checkbox" id="optinEmail"> Opt-in Email</label>
-            <label><input type="checkbox" id="optinSMS"> Opt-in SMS</label>
-            <label><input type="checkbox" id="optinPush"> Opt-in Push Notification</label>
-        </div>
-        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
-    </form>
-    <div id="messageInscription"></div>
-</div>
-
-<hr>
 
 <footer>
   <p>© Imagino – Tous droits réservés</p>
