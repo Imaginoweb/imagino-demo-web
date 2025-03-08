@@ -35,6 +35,16 @@
             document.getElementById('cartPreview').innerHTML = preview || "<p>Panier vide</p>";
         }
 
+        function inscrireUtilisateur() {
+            let email = document.getElementById('email').value;
+            if (!email.includes('@')) {
+                alert("Veuillez entrer un email valide !");
+                return;
+            }
+            localStorage.setItem('newsletter', email);
+            alert("Merci pour votre inscription !");
+        }
+
         document.addEventListener('DOMContentLoaded', afficherPanier);
     </script>
 </head>
@@ -51,6 +61,22 @@
 
 <div class="container">
     <div class="product">
+        <img src="cdp.png" alt="CDP Imagino">
+        <h3>Customer Data Platform</h3>
+        <p>Une CDP flexible et puissante.</p>
+        <strong>99€</strong>
+        <button onclick="ajouterAuPanier('CDP Imagino', 99, 'cdp.png')">Ajouter au panier</button>
+    </div>
+
+    <div class="product">
+        <img src="campaign.png" alt="Imagino Campaign">
+        <h3>Imagino Campaign</h3>
+        <p>Solution avancée de gestion de campagnes.</p>
+        <strong>149€</strong>
+        <button onclick="ajouterAuPanier('Imagino Campaign', 149, 'campaign.png')">Ajouter au panier</button>
+    </div>
+
+    <div class="product">
         <img src="cachan.png" alt="Petit Déjeuner">
         <h3>Petit Déjeuner</h3>
         <p>Un délicieux petit déjeuner à Cachan.</p>
@@ -61,6 +87,14 @@
 
 <hr>
 
+<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
+    <h2>Inscription à la newsletter 📧</h2>
+    <form>
+        <input type="email" placeholder="Votre email" id="email" required>
+        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
+    </form>
+</div>
+
 <footer style="background-color: #f8f9fa; padding: 40px 0; font-family: Arial, sans-serif; color: #333;">
     <div style="display: flex; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: auto;">
         <div style="flex: 1; min-width: 250px; padding: 10px; text-align: left;">
@@ -68,6 +102,27 @@
             <p><strong>+33 (0)1 84 04 09 00</strong></p>
             <p>45-47 avenue Carnot<br>94230 Cachan<br>France</p>
         </div>
+
+        <div style="flex: 1; min-width: 150px; padding: 10px;">
+            <h4>Solutions</h4>
+            <p><a href="#">Customer Data Platform</a></p>
+            <p><a href="#">Imagino Campaign</a></p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px; padding: 10px;">
+            <h4>Références</h4>
+            <p><a href="#">Clients</a></p>
+            <p><a href="#">Partenaires</a></p>
+        </div>
+
+        <div style="flex: 1; min-width: 150px; padding: 10px;">
+            <h4>Contact</h4>
+            <p><a href="#">Nous contacter</a></p>
+        </div>
+    </div>
+
+    <div style="text-align: center; padding-top: 20px; font-size: 14px;">
+        <a href="#">Mentions légales</a> | <a href="#">Charte données personnelles</a>
     </div>
 </footer>
 
