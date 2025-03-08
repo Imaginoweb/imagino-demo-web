@@ -37,6 +37,16 @@
             document.getElementById('cartPreview').innerHTML = preview;
         }
 
+        function inscrireUtilisateur() {
+            let email = document.getElementById('email').value;
+            if (!email.includes('@')) {
+                alert("Veuillez entrer un email valide !");
+                return;
+            }
+            localStorage.setItem('newsletter', email);
+            alert("Merci pour votre inscription !");
+        }
+
         document.addEventListener('DOMContentLoaded', afficherPanier);
     </script>
 </head>
@@ -71,6 +81,26 @@
 </div>
 
 <hr>
+
+<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
+    <h2>Inscription à la newsletter 📧</h2>
+    <p>Inscrivez-vous à notre NL et gagnez un workspace!</p>
+    <form id="newsletterForm">
+        <input type="text" placeholder="Prénom" id="prenom" required>
+        <input type="text" placeholder="Nom" id="nom" required>
+        <input type="email" placeholder="Email" id="email" required>
+        <div class="optins">
+            <label><input type="checkbox" id="optinEmail"> Opt-in Email</label>
+            <label><input type="checkbox" id="optinSMS"> Opt-in SMS</label>
+            <label><input type="checkbox" id="optinPush"> Opt-in Push Notification</label>
+        </div>
+        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
+    </form>
+    <div id="messageInscription"></div>
+</div>
+
+<hr>
+
 <footer>
   <p>© Imagino – Tous droits réservés</p>
 </footer>
