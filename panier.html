@@ -11,13 +11,12 @@
         table { width: 100%; }
         th, td { padding: 10px; text-align: left; }
         button { padding: 10px; background-color: #6D28D9; color:white; border:none; border-radius:4px; cursor:pointer; }
-        .remove-btn { background-color: red; }
+        .remove-btn { background-color: red; padding: 5px 8px; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <header>
-    <img src="logo.png" style="width:200px;">
     <h1>Votre panier Imagino 🛒</h1>
 </header>
 
@@ -39,7 +38,8 @@
             </tr>
         </tfoot>
     </table>
-    <button onclick="localStorage.clear(); location.reload();">Vider le panier</button>
+    <button onclick="window.location.href='index.html'">⬅️ Retour à la boutique</button>
+    <button onclick="alert('Commande confirmée 🎉')">✅ Confirmer la commande</button>
 </div>
 
 <script>
