@@ -13,6 +13,7 @@
         .cart { position: fixed; top: 15px; right: 15px; background: #6D28D9; color: white; padding: 10px; border-radius: 4px; cursor: pointer; }
         .cart-items-preview { display: none; position: absolute; right: 0; top: 40px; background: #fff; color: black; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 10; width: 250px; }
         .cart:hover .cart-items-preview { display: block; }
+        .cart-item img { width: 30px; height: 30px; object-fit: contain; border-radius: 4px; }
     </style>
     <script>
         let panier = JSON.parse(localStorage.getItem('panier') || '[]');
@@ -29,20 +30,10 @@
             let preview = panier.map(item => `
                 <div class="cart-item">
                     <img src="${item.image}" alt="${item.nom}">
-                    <div>${item.nom} - ${item.prix}€</div>
+                    <span>${item.nom} - ${item.prix}€</span>
                 </div>
             `).join('');
             document.getElementById('cartPreview').innerHTML = preview || "<p>Panier vide</p>";
-        }
-
-        function inscrireUtilisateur() {
-            let email = document.getElementById('email').value;
-            if (!email.includes('@')) {
-                alert("Veuillez entrer un email valide !");
-                return;
-            }
-            localStorage.setItem('newsletter', email);
-            alert("Merci pour votre inscription !");
         }
 
         document.addEventListener('DOMContentLoaded', afficherPanier);
@@ -75,25 +66,17 @@
         <strong>149€</strong>
         <button onclick="ajouterAuPanier('Imagino Campaign', 149, 'campaign.png')">Ajouter au panier</button>
     </div>
+</div>
 
-    <div class="product">
-        <img src="cachan.png" alt="Petit Déjeuner">
-        <h3>Petit Déjeuner</h3>
-        <p>Un délicieux petit déjeuner à Cachan.</p>
-        <strong>29€</strong>
-        <button onclick="ajouterAuPanier('Petit Déjeuner', 29, 'cachan.png')">Ajouter au panier</button>
+<!-- Carrousel des références clients -->
+<section style="text-align: center; margin: 50px 0;">
+    <h2>Nos références clients</h2>
+    <div id="carousel" style="display: flex; overflow: hidden; width: 300px; margin: auto;">
+        <img src="client1.png" alt="Client 1" style="width: 100px; margin: 0 10px;">
+        <img src="client2.png" alt="Client 2" style="width: 100px; margin: 0 10px;">
+        <img src="client3.png" alt="Client 3" style="width: 100px; margin: 0 10px;">
     </div>
-</div>
-
-<hr>
-
-<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
-    <h2>Inscription à la newsletter 📧</h2>
-    <form>
-        <input type="email" placeholder="Votre email" id="email" required>
-        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
-    </form>
-</div>
+</section>
 
 <footer style="background-color: #f8f9fa; padding: 40px 0; font-family: Arial, sans-serif; color: #333;">
     <div style="display: flex; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: auto;">
