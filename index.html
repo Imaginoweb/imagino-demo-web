@@ -14,6 +14,10 @@
         .cart-items-preview { display: none; position: absolute; right: 0; top: 40px; background: #fff; color: black; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 10; width: 250px; }
         .cart:hover .cart-items-preview { display: block; }
         .cart-item img { width: 30px; height: 30px; object-fit: contain; border-radius: 4px; }
+
+        /* Carrousel */
+        .carousel { display: flex; overflow: hidden; width: 300px; margin: auto; }
+        .carousel img { width: 100px; margin: 0 10px; transition: transform 0.5s ease-in-out; }
     </style>
     <script>
         let panier = JSON.parse(localStorage.getItem('panier') || '[]');
@@ -34,6 +38,16 @@
                 </div>
             `).join('');
             document.getElementById('cartPreview').innerHTML = preview || "<p>Panier vide</p>";
+        }
+
+        function inscrireUtilisateur() {
+            let email = document.getElementById('email').value;
+            if (!email.includes('@')) {
+                alert("Veuillez entrer un email valide !");
+                return;
+            }
+            localStorage.setItem('newsletter', email);
+            alert("Merci pour votre inscription !");
         }
 
         document.addEventListener('DOMContentLoaded', afficherPanier);
@@ -66,17 +80,36 @@
         <strong>149€</strong>
         <button onclick="ajouterAuPanier('Imagino Campaign', 149, 'campaign.png')">Ajouter au panier</button>
     </div>
+
+    <div class="product">
+        <img src="cachan.png" alt="Petit Déjeuner">
+        <h3>Petit Déjeuner</h3>
+        <p>Un délicieux petit déjeuner à Cachan.</p>
+        <strong>29€</strong>
+        <button onclick="ajouterAuPanier('Petit Déjeuner', 29, 'cachan.png')">Ajouter au panier</button>
+    </div>
 </div>
 
 <!-- Carrousel des références clients -->
 <section style="text-align: center; margin: 50px 0;">
     <h2>Nos références clients</h2>
-    <div id="carousel" style="display: flex; overflow: hidden; width: 300px; margin: auto;">
-        <img src="client1.png" alt="Client 1" style="width: 100px; margin: 0 10px;">
-        <img src="client2.png" alt="Client 2" style="width: 100px; margin: 0 10px;">
-        <img src="client3.png" alt="Client 3" style="width: 100px; margin: 0 10px;">
+    <div class="carousel">
+        <img src="client1.png" alt="Client 1">
+        <img src="client2.png" alt="Client 2">
+        <img src="client3.png" alt="Client 3">
     </div>
 </section>
+
+<hr>
+
+<!-- Inscription à la newsletter -->
+<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
+    <h2>Inscription à la newsletter 📧</h2>
+    <form>
+        <input type="email" placeholder="Votre email" id="email" required>
+        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
+    </form>
+</div>
 
 <footer style="background-color: #f8f9fa; padding: 40px 0; font-family: Arial, sans-serif; color: #333;">
     <div style="display: flex; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: auto;">
@@ -85,27 +118,6 @@
             <p><strong>+33 (0)1 84 04 09 00</strong></p>
             <p>45-47 avenue Carnot<br>94230 Cachan<br>France</p>
         </div>
-
-        <div style="flex: 1; min-width: 150px; padding: 10px;">
-            <h4>Solutions</h4>
-            <p><a href="#">Customer Data Platform</a></p>
-            <p><a href="#">Imagino Campaign</a></p>
-        </div>
-
-        <div style="flex: 1; min-width: 150px; padding: 10px;">
-            <h4>Références</h4>
-            <p><a href="#">Clients</a></p>
-            <p><a href="#">Partenaires</a></p>
-        </div>
-
-        <div style="flex: 1; min-width: 150px; padding: 10px;">
-            <h4>Contact</h4>
-            <p><a href="#">Nous contacter</a></p>
-        </div>
-    </div>
-
-    <div style="text-align: center; padding-top: 20px; font-size: 14px;">
-        <a href="#">Mentions légales</a> | <a href="#">Charte données personnelles</a>
     </div>
 </footer>
 
