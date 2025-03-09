@@ -8,16 +8,17 @@
         body { font-family: 'Poppins', Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
         header, footer { padding: 20px; text-align: center; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .container { display: flex; justify-content: center; flex-wrap: wrap; padding: 20px; }
-        .product { background: #fff; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 15px; padding: 15px; width: 220px; text-align: center; display: flex; flex-direction: column; }
-        .product img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto; }
+        .product { background: #fff; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 15px; padding: 15px; width: 220px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .product img { width: 150px; height: 150px; object-fit: contain; margin-bottom: 10px; }
+        .product strong, .product button { width: 100%; text-align: center; }
         .cart { position: fixed; top: 15px; right: 15px; background: #6D28D9; color: white; padding: 10px; border-radius: 4px; cursor: pointer; }
         .cart-items-preview { display: none; position: absolute; right: 0; top: 40px; background: #fff; color: black; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 10; width: 250px; }
         .cart:hover .cart-items-preview { display: block; }
         .cart-item img { width: 30px; height: 30px; object-fit: contain; border-radius: 4px; }
 
         /* Carrousel */
-        .carousel { display: flex; overflow: hidden; width: 300px; margin: auto; }
-        .carousel img { width: 100px; margin: 0 10px; transition: transform 0.5s ease-in-out; }
+        .carousel { display: flex; overflow: hidden; justify-content: center; gap: 20px; }
+        .carousel img { width: 300px; transition: transform 0.5s ease-in-out; }
     </style>
     <script>
         let panier = JSON.parse(localStorage.getItem('panier') || '[]');
@@ -38,16 +39,6 @@
                 </div>
             `).join('');
             document.getElementById('cartPreview').innerHTML = preview || "<p>Panier vide</p>";
-        }
-
-        function inscrireUtilisateur() {
-            let email = document.getElementById('email').value;
-            if (!email.includes('@')) {
-                alert("Veuillez entrer un email valide !");
-                return;
-            }
-            localStorage.setItem('newsletter', email);
-            alert("Merci pour votre inscription !");
         }
 
         document.addEventListener('DOMContentLoaded', afficherPanier);
