@@ -3,25 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <title>Votre Panier 🛒</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     <style>
         body { font-family: 'Poppins', Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
         header, footer { padding: 20px; text-align: center; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .cart-container { width: 60%; margin: auto; background: #fff; padding: 20px; border-radius: 8px; }
+        .cart-container { width: 60%; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
         img { width: 60px; height: 60px; object-fit: contain; }
         button { padding: 10px; background-color: #6D28D9; color:white; border:none; border-radius:4px; cursor:pointer; }
+        .remove-btn { background-color: red; padding: 5px 8px; font-size: 14px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Votre panier Imagino 🛒</h1>
+    <h1>Votre Panier 🛒</h1>
 </header>
 
 <div class="cart-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Nom</th>
+                <th>Prix (€)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="panierItems"></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"><strong>Total</strong></td>
+                <td id="totalPrix"></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
     <button onclick="window.location.href='index.html'">⬅️ Retour à la boutique</button>
+    <button onclick="alert('Commande confirmée 🎉')">✅ Confirmer la commande</button>
 </div>
 
 <hr>
+
+<!-- Carrousel des références clients -->
+<section style="text-align: center; margin: 50px 0;">
+    <h2>Nos références clients</h2>
+    <div class="carousel">
+        <img src="client1.png" alt="Client 1" style="width: 300px;">
+        <img src="client2.png" alt="Client 2" style="width: 300px;">
+        <img src="client3.png" alt="Client 3" style="width: 300px;">
+    </div>
+</section>
+
+<hr>
+
+<!-- Inscription à la newsletter -->
+<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
+    <h2>Inscription à la newsletter 📧</h2>
+    <form>
+        <input type="email" placeholder="Votre email" id="email" required>
+        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
+    </form>
+</div>
 
 <footer style="background-color: #f8f9fa; padding: 40px 0; font-family: Arial, sans-serif; color: #333;">
     <div style="display: flex; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: auto;">
@@ -32,6 +76,38 @@
         </div>
     </div>
 </footer>
+
+<script>
+let panier = JSON.parse(localStorage.getItem('panier') || '[]');
+let container = document.getElementById('panierItems');
+let total = 0;
+
+function afficherPanier() {
+    container.innerHTML = "";
+    total = 0;
+
+    panier.forEach((p, index) => {
+        total += p.prix;
+        container.innerHTML += `
+            <tr>
+                <td><img src="${p.image}" alt="${p.nom}"></td>
+                <td>${p.nom}</td>
+                <td>${p.prix}€</td>
+                <td><button class="remove-btn" onclick="supprimerArticle(${index})">❌</button></td>
+            </tr>`;
+    });
+
+    document.getElementById('totalPrix').innerText = total + "€";
+}
+
+function supprimerArticle(index) {
+    panier.splice(index, 1);
+    localStorage.setItem('panier', JSON.stringify(panier));
+    afficherPanier();
+}
+
+document.addEventListener('DOMContentLoaded', afficherPanier);
+</script>
 
 </body>
 </html>
