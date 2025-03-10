@@ -1,123 +1,207 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Boutique Imagino 🛒</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-    <style>
-        body { font-family: 'Poppins', Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
-        .container { display: flex; justify-content: center; flex-wrap: wrap; padding: 20px; }
-        .cart { position: fixed; top: 15px; right: 15px; background: #6D28D9; color: white; padding: 10px; border-radius: 4px; cursor: pointer; }
-        .cart-preview { position: absolute; top: 40px; right: 0; background: white; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: none; }
-        .cart:hover .cart-preview { display: block; }
-        .cart-item img { width: 30px; height: 30px; object-fit: contain; }
-        .carousel { display: flex; overflow-x: auto; gap: 20px; justify-content: center; padding: 20px; }
-        .carousel img { width: 200px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo CDP Imagino</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      padding-top: 70px;
+    }
+    .navbar-brand img {
+      height: 40px;
+    }
+    .banner {
+      background: url('campaign.png') no-repeat center center;
+      background-size: cover;
+      height: 300px;
+      position: relative;
+      color: white;
+      text-align: center;
+    }
+    .banner h1 {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.5);
+      padding: 10px 20px;
+    }
+    .section {
+      padding: 30px 0;
+    }
+  </style>
 </head>
 <body>
-
-<header>
-    <h1>Boutique Imagino 🛍️</h1>
-</header>
-
-<!-- Panier avec prévisualisation -->
-<div class="cart">
-    <a href="panier.html">🛒 Panier : <span id="cartCount">0</span></a>
-    <div class="cart-preview" id="cartPreview"></div>
-</div>
-
-<div class="container">
-    <div class="product">
-        <img src="cdp.png" alt="CDP Imagino">
-        <h3>Customer Data Platform</h3>
-        <strong>99€</strong>
-        <button onclick="ajouterAuPanier('CDP Imagino', 99, 'cdp.png')">Ajouter</button>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="index.html">
+      <img src="logo.png" alt="Logo">
+      Demo CDP Imagino
+    </a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="panier.html">Panier</a>
+        </li>
+      </ul>
     </div>
-    <div class="product">
-        <img src="campaign.png" alt="Imagino Campaign">
-        <h3>Imagino Campaign</h3>
-        <strong>149€</strong>
-        <button onclick="ajouterAuPanier('Imagino Campaign', 149, 'campaign.png')">Ajouter</button>
-    </div>
-    <div class="product">
-        <img src="cachan.png" alt="Petit Déjeuner">
-        <h3>Petit Déjeuner</h3>
-        <strong>29€</strong>
-        <button onclick="ajouterAuPanier('Petit Déjeuner', 29, 'cachan.png')">Ajouter</button>
-    </div>
-</div>
+  </nav>
 
-<!-- Carrousel des références clients -->
-<section>
-    <h2>Nos références clients</h2>
-    <div class="carousel">
-        <img src="client1.png" alt="Client 1">
-        <img src="client2.png" alt="Client 2">
-        <img src="client3.png" alt="Client 3">
-    </div>
-</section>
+  <!-- Banner -->
+  <header class="banner">
+    <h1>Bienvenue sur le site de démonstration CDP Imagino</h1>
+  </header>
 
-<!-- Inscription Newsletter -->
-<div style="text-align:center; padding:20px; background:#fff;">
-    <h2>Inscription à la newsletter 📧</h2>
+  <!-- Section Présentation Clients & Solutions -->
+  <div class="container section">
+    <h2>Nos Clients et Solutions</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <img src="cdp.png" class="img-fluid" alt="CDP">
+      </div>
+      <div class="col-md-4">
+        <img src="cachan.png" class="img-fluid" alt="Cachan">
+      </div>
+      <div class="col-md-4">
+        <img src="campaign.png" class="img-fluid" alt="Campaign">
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <img src="client1.png" class="img-fluid" alt="Client 1">
+      </div>
+      <div class="col-md-4">
+        <img src="client2.png" class="img-fluid" alt="Client 2">
+      </div>
+      <div class="col-md-4">
+        <img src="client3.png" class="img-fluid" alt="Client 3">
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Newsletter / Inscription -->
+  <div class="container section">
+    <h2>Inscription à la Newsletter</h2>
     <form id="newsletterForm">
-        <input type="email" placeholder="Votre email" id="email" required>
-        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="firstName">Prénom</label>
+          <input type="text" class="form-control" id="firstName" placeholder="Votre prénom" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="lastName">Nom</label>
+          <input type="text" class="form-control" id="lastName" placeholder="Votre nom" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Adresse Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Votre email" required>
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone</label>
+        <input type="text" class="form-control" id="telephone" placeholder="Votre téléphone" required>
+      </div>
+      <div class="form-group">
+        <label for="dateOfBirth">Date de Naissance</label>
+        <input type="date" class="form-control" id="dateOfBirth" required>
+      </div>
+      <button type="submit" class="btn btn-primary">S'inscrire</button>
     </form>
-    <p id="messageValidation"></p>
-</div>
+    <div id="responseMessage" class="mt-3"></div>
+  </div>
 
-<footer>
-    <p>© Imagino – <a href="#">Mentions légales</a></p>
-</footer>
+  <!-- Section Graphiques Démonstration -->
+  <div class="container section">
+    <h2>Graphiques Démonstration</h2>
+    <canvas id="demoChart" width="400" height="200"></canvas>
+  </div>
 
-<script>
-async function inscrireUtilisateur() {
-    let email = document.getElementById('email').value.trim();
-    let message = document.getElementById('messageValidation');
+  <!-- JS Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Initialisation du graphique avec Chart.js
+    const ctx = document.getElementById('demoChart').getContext('2d');
+    const demoChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+        datasets: [{
+          label: 'Exemple de ventes',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: { beginAtZero: true }
+          }]
+        }
+      }
+    });
 
-    if (!email.includes('@') || !email.includes('.')) {
-        message.style.color = "red";
-        message.innerText = "❌ Veuillez entrer une adresse email valide.";
-        return;
-    }
+    // Gestion du formulaire newsletter avec appel API vers Imagino
+    document.getElementById('newsletterForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Récupération des valeurs du formulaire
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const email = document.getElementById('email').value;
+      const telephone = document.getElementById('telephone').value;
+      const dateOfBirth = document.getElementById('dateOfBirth').value;
+      
+      // Construction du payload selon le schéma RCU-write
+      const payload = {
+        Entreprise: 1,          // À ajuster selon vos besoins
+        WEB_ID: 1,              // À ajuster selon vos besoins
+        addressLine: "",        // Complétez si nécessaire
+        dateOfBirth: dateOfBirth,
+        email: email,
+        firstName: firstName,
+        gender: "non spécifié", // Valeur par défaut
+        lastModifiedDate: new Date().toISOString(),
+        lastName: lastName,
+        optInEmail: true,
+        optInPush: false,
+        optInSMS: false,
+        telephone: telephone,
+        ucdId: ""
+      };
 
-    message.style.color = "blue";
-    message.innerText = "🔍 Vérification en cours...";
+      // URL de l'API Imagino (basée sur Newcustomer.json)
+      const apiEndpoint = 'https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU';
+      const apiKey = '2a79b8c4-b270-4a61-8b64-437ccea75586';
 
-    try {
-        let response = await fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?exact_email=${encodeURIComponent(email)}`, {
-            method: 'GET',
-            headers: {
-                'X-API-KEY': '2a79b8c4-b270-4a61-8b64-437ccea75586',
-                'Content-Type': 'application/json'
-            }
+      try {
+        const response = await fetch(apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-KEY': apiKey
+          },
+          body: JSON.stringify(payload)
         });
-
-        if (!response.ok) {
-            throw new Error(`Erreur API: ${response.status}`);
-        }
-
-        let data = await response.json();
-        console.log("Réponse API :", data); // 🔥 Affiche la vraie réponse API
-
-        if (data && data.length > 0) {
-            message.style.color = "green";
-            message.innerText = "✅ Email valide ! Inscription en cours...";
-            setTimeout(() => { alert("Inscription réussie !"); }, 1000);
+        
+        const data = await response.json();
+        if (response.ok) {
+          document.getElementById('responseMessage').innerHTML = '<div class="alert alert-success">Inscription réussie ! ID généré: ' + (data.ucdId || 'N/A') + '</div>';
         } else {
-            message.style.color = "red";
-            message.innerText = "❌ Cette adresse email n'existe pas.";
+          document.getElementById('responseMessage').innerHTML = '<div class="alert alert-danger">Erreur: ' + (data.error || 'Une erreur est survenue.') + '</div>';
         }
-
-    } catch (error) {
-        message.style.color = "red";
-        message.innerText = "❌ Erreur lors de la vérification. Réessayez plus tard.";
-        console.error("Erreur API :", error);
-    }
-}
-</script>
-
+      } catch (error) {
+        console.error('Erreur:', error);
+        document.getElementById('responseMessage').innerHTML = '<div class="alert alert-danger">Erreur de connexion: ' + error.message + '</div>';
+      }
+    });
+  </script>
 </body>
 </html>
