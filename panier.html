@@ -3,17 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Votre Panier 🛒</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-    <style>
-        body { font-family: 'Poppins', Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
-        header, footer { padding: 20px; text-align: center; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .cart-container { width: 60%; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 10px; text-align: center; border-bottom: 1px solid #ddd; }
-        img { width: 60px; height: 60px; object-fit: contain; }
-        button { padding: 10px; background-color: #6D28D9; color:white; border:none; border-radius:4px; cursor:pointer; }
-        .remove-btn { background-color: red; padding: 5px 8px; font-size: 14px; }
-    </style>
 </head>
 <body>
 
@@ -36,147 +25,64 @@
             <tr>
                 <td colspan="2"><strong>Total</strong></td>
                 <td id="totalPrix"></td>
-                <td></td>
+                <td><button onclick="viderPanier()">🗑️ Vider mon panier</button></td>
             </tr>
         </tfoot>
     </table>
-    <button onclick="window.location.href='index.html'">⬅️ Retour à la boutique</button>
-    <button onclick="alert('Commande confirmée 🎉')">✅ Confirmer la commande</button>
+    <button onclick="window.location.href='index.html'">⬅️ Retour</button>
+    <button onclick="alert('Commande confirmée 🎉')">✅ Confirmer</button>
 </div>
 
 <hr>
 
-<!-- Carrousel des références clients -->
-<section style="text-align: center; margin: 50px 0;">
-    <h2>Nos références clients</h2>
-    <div class="carousel">
-        <img src="client1.png" alt="Client 1" style="width: 300px;">
-        <img src="client2.png" alt="Client 2" style="width: 300px;">
-        <img src="client3.png" alt="Client 3" style="width: 300px;">
-    </div>
-</section>
-
-<hr>
-
-<!-- Formulaire d'inscription à la newsletter -->
-<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
+<!-- Inscription Newsletter -->
+<div style="text-align:center; padding:20px; background:#fff;">
     <h2>Inscription à la newsletter 📧</h2>
     <form id="newsletterForm">
         <input type="email" placeholder="Votre email" id="email" required>
-        <button type="button" onclick="verifierEmail()">S'inscrire</button>
+        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
     </form>
-    <p id="messageValidation" style="color: red; font-weight: bold;"></p>
+    <p id="messageValidation"></p>
 </div>
 
-<script>
-async function verifierEmail() {
-    let email = document.getElementById('email').value;
-    let message = document.getElementById('messageValidation');
-
-    if (!email.includes('@')) {
-        message.innerText = "Veuillez entrer une adresse email valide.";
-        return;
-    }
-
-    try {
-        let response = await fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?exact_email=${email}`, {
-            method: 'GET',
-            headers: {
-                'X-API-KEY': '2a79b8c4-b270-4a61-8b64-437ccea75586'
-            }
-        });
-
-        let data = await response.json();
-
-        if (data.length > 0) {  
-            message.style.color = "green";
-            message.innerText = "✅ Email valide ! Inscription en cours...";
-            setTimeout(() => { alert("Inscription réussie !"); }, 1000);
-        } else {
-            message.innerText = "❌ Cette adresse email n'existe pas.";
-        }
-
-    } catch (error) {
-        message.innerText = "Erreur lors de la vérification. Réessayez plus tard.";
-        console.error("Erreur API:", error);
-    }
-}
-</script>
-
-<footer style="background-color: #f8f9fa; padding: 40px 0; font-family: Arial, sans-serif; color: #333;">
-    <div style="display: flex; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: auto;">
-        <div style="flex: 1; min-width: 250px; padding: 10px; text-align: left;">
-            <img src="logo.png" alt="Imagino Logo" style="width: 150px;">
-            <p><strong>+33 (0)1 84 04 09 00</strong></p>
-            <p>45-47 avenue Carnot<br>94230 Cachan<br>France</p>
-        </div>
-    </div>
+<footer>
+    <p>© Imagino – <a href="#">Mentions légales</a></p>
 </footer>
 
 <script>
-let panier = JSON.parse(localStorage.getItem('panier') || '[]');
-let container = document.getElementById('panierItems');
-let total = 0;
+document.addEventListener('DOMContentLoaded', function() {
+    let panier = JSON.parse(localStorage.getItem('panier') || '[]');
+    let container = document.getElementById('panierItems');
+    let total = 0;
 
-function afficherPanier() {
-    container.innerHTML = "";
-    total = 0;
-
-    panier.forEach((p, index) => {
-        total += p.prix;
-        container.innerHTML += `
-            <tr>
-                <td><img src="${p.image}" alt="${p.nom}"></td>
+    function afficherPanier() {
+        container.innerHTML = "";
+        total = 0;
+        panier.forEach((p, index) => {
+            total += p.prix;
+            container.innerHTML += `<tr>
+                <td><img src="${p.image}" style="width:50px;"></td>
                 <td>${p.nom}</td>
                 <td>${p.prix}€</td>
-                <td><button class="remove-btn" onclick="supprimerArticle(${index})">❌</button></td>
+                <td><button onclick="supprimerArticle(${index})">❌</button></td>
             </tr>`;
-    });
-
-    document.getElementById('totalPrix').innerText = total + "€";
-}
-
-function supprimerArticle(index) {
-    panier.splice(index, 1);
-    localStorage.setItem('panier', JSON.stringify(panier));
-    afficherPanier();
-}
-
-document.addEventListener('DOMContentLoaded', afficherPanier);
-async function inscrireUtilisateur() {
-    let email = document.getElementById('email').value;
-    let message = document.getElementById('messageValidation');
-
-    if (!email.includes('@')) {
-        message.innerText = "❌ Veuillez entrer une adresse email valide.";
-        return;
-    }
-
-    try {
-        let response = await fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?exact_email=${email}`, {
-            method: 'GET',
-            headers: {
-                'X-API-KEY': '2a79b8c4-b270-4a61-8b64-437ccea75586'
-            }
         });
-
-        let data = await response.json();
-
-        if (data.length > 0) {  
-            message.style.color = "green";
-            message.innerText = "✅ Email valide ! Inscription en cours...";
-            setTimeout(() => { alert("Inscription réussie !"); }, 1000);
-        } else {
-            message.innerText = "❌ Cette adresse email n'existe pas.";
-        }
-
-    } catch (error) {
-        message.innerText = "❌ Erreur lors de la vérification. Réessayez plus tard.";
-        console.error("Erreur API:", error);
+        document.getElementById('totalPrix').innerText = total + "€";
     }
-}
 
-    
+    function viderPanier() {
+        localStorage.removeItem('panier');
+        location.reload();
+    }
+
+    function supprimerArticle(index) {
+        panier.splice(index, 1);
+        localStorage.setItem('panier', JSON.stringify(panier));
+        afficherPanier();
+    }
+
+    afficherPanier();
+});
 </script>
 
 </body>
