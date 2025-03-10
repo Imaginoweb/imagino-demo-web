@@ -13,6 +13,26 @@
       flex-direction: column;
       min-height: 100vh;
     }
+    .navbar-brand img {
+      height: 40px;
+    }
+    .banner {
+      background: url('banner.png') no-repeat center center;
+      background-size: cover;
+      height: 200px;
+      position: relative;
+      color: white;
+      text-align: center;
+    }
+    .banner h1 {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.5);
+      padding: 5px 10px;
+      font-size: 1.5rem;
+    }
     .container {
       margin-top: 50px;
     }
@@ -36,10 +56,15 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="index.html">
-      <img src="logo.png" alt="Logo" style="height:40px;">
+      <img src="logo.png" alt="Logo">
       Demo CDP Imagino
     </a>
   </nav>
+
+  <!-- Bannière -->
+  <header class="banner">
+    <h1>Confirmation de Commande</h1>
+  </header>
 
   <!-- Confirmation de Commande -->
   <div class="container">
