@@ -100,6 +100,7 @@ async function inscrireUtilisateur() {
         }
 
         let data = await response.json();
+        console.log("Réponse API :", data); // 🔥 Affiche la vraie réponse API
 
         if (data && data.length > 0) {
             message.style.color = "green";
@@ -113,7 +114,7 @@ async function inscrireUtilisateur() {
     } catch (error) {
         message.style.color = "red";
         message.innerText = "❌ Erreur lors de la vérification. Réessayez plus tard.";
-        console.error("Erreur API:", error);
+        console.error("Erreur API :", error);
     }
 }
 </script>
