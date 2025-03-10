@@ -139,7 +139,7 @@
     </div>
   </div>
 
-  <!-- JS Scripts -->
+  <!-- Scripts JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
@@ -198,13 +198,16 @@
         
         const data = await response.json();
         if (response.ok) {
-          document.getElementById('responseMessage').innerHTML = '<div class="alert alert-success">Inscription réussie ! ID généré : ' + (data.ucdId || 'N/A') + '</div>';
+          document.getElementById('responseMessage').innerHTML = 
+            '<div class="alert alert-success">Merci pour ton inscription ! Un email de confirmation a été envoyé à ' + email + '.</div>';
         } else {
-          document.getElementById('responseMessage').innerHTML = '<div class="alert alert-danger">Erreur : ' + (data.error || 'Une erreur est survenue.') + '</div>';
+          document.getElementById('responseMessage').innerHTML = 
+            '<div class="alert alert-danger">Erreur : ' + (data.error || 'Une erreur est survenue.') + '</div>';
         }
       } catch (error) {
         console.error('Erreur :', error);
-        document.getElementById('responseMessage').innerHTML = '<div class="alert alert-danger">Erreur de connexion : ' + error.message + '</div>';
+        document.getElementById('responseMessage').innerHTML = 
+          '<div class="alert alert-danger">Erreur de connexion : ' + error.message + '</div>';
       }
     });
   </script>
