@@ -32,6 +32,9 @@
     .section {
       padding: 30px 0;
     }
+    .card {
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -55,67 +58,43 @@
     <h1>Bienvenue sur le site de démonstration CDP Imagino</h1>
   </header>
 
-  <!-- Section Clients & Solutions -->
-  <div class="container section">
-    <h2>Nos Clients et Solutions</h2>
-    <div class="row">
-      <div class="col-md-4">
-        <img src="cdp.png" class="img-fluid" alt="CDP">
-      </div>
-      <div class="col-md-4">
-        <img src="cachan.png" class="img-fluid" alt="Cachan">
-      </div>
-      <div class="col-md-4">
-        <img src="campaign.png" class="img-fluid" alt="Campaign">
-      </div>
-    </div>
-    <div class="row mt-3">
-      <div class="col-md-4">
-        <img src="client1.png" class="img-fluid" alt="Client 1">
-      </div>
-      <div class="col-md-4">
-        <img src="client2.png" class="img-fluid" alt="Client 2">
-      </div>
-      <div class="col-md-4">
-        <img src="client3.png" class="img-fluid" alt="Client 3">
-      </div>
-    </div>
-  </div>
-
   <!-- Section Produits -->
   <div class="container section">
     <h2>Nos Produits</h2>
     <div class="row">
       <!-- Produit CDP -->
-      <div class="col-md-4">
+      <div class="col-md-4 d-flex align-items-stretch">
         <div class="card">
           <img src="cdp.png" class="card-img-top" alt="CDP">
-          <div class="card-body">
+          <div class="card-body d-flex flex-column">
             <h5 class="card-title">CDP</h5>
-            <p class="card-text">Prix: 49.99 €</p>
-            <button class="btn btn-primary" onclick="addToCart('CDP', 49.99, 'cdp.png')">Ajouter au panier</button>
+            <p class="card-text">La solution CDP vous permet de centraliser les données clients pour une gestion optimisée de vos campagnes marketing.</p>
+            <p class="card-text"><strong>Prix: 49.99 €</strong></p>
+            <button class="btn btn-primary mt-auto" onclick="addToCart('CDP', 49.99, 'cdp.png')">Ajouter au panier</button>
           </div>
         </div>
       </div>
       <!-- Produit Campaign -->
-      <div class="col-md-4">
+      <div class="col-md-4 d-flex align-items-stretch">
         <div class="card">
           <img src="campaign.png" class="card-img-top" alt="Campaign">
-          <div class="card-body">
+          <div class="card-body d-flex flex-column">
             <h5 class="card-title">Campaign</h5>
-            <p class="card-text">Prix: 29.99 €</p>
-            <button class="btn btn-primary" onclick="addToCart('Campaign', 29.99, 'campaign.png')">Ajouter au panier</button>
+            <p class="card-text">Campaign est notre outil innovant pour créer, gérer et analyser vos campagnes publicitaires.</p>
+            <p class="card-text"><strong>Prix: 29.99 €</strong></p>
+            <button class="btn btn-primary mt-auto" onclick="addToCart('Campaign', 29.99, 'campaign.png')">Ajouter au panier</button>
           </div>
         </div>
       </div>
       <!-- Produit Petit Déjeuner -->
-      <div class="col-md-4">
+      <div class="col-md-4 d-flex align-items-stretch">
         <div class="card">
-          <img src="https://via.placeholder.com/300x200?text=Petit+Déjeuner" class="card-img-top" alt="Petit Déjeuner">
-          <div class="card-body">
+          <img src="cachan.png" class="card-img-top" alt="Petit Déjeuner">
+          <div class="card-body d-flex flex-column">
             <h5 class="card-title">Petit Déjeuner</h5>
-            <p class="card-text">Prix: 9.99 €</p>
-            <button class="btn btn-primary" onclick="addToCart('Petit Déjeuner', 9.99, 'https://via.placeholder.com/300x200?text=Petit+Déjeuner')">Ajouter au panier</button>
+            <p class="card-text">Savourez un délicieux petit déjeuner pour bien commencer la journée avec notre offre gourmande.</p>
+            <p class="card-text"><strong>Prix: 9.99 €</strong></p>
+            <button class="btn btn-primary mt-auto" onclick="addToCart('Petit Déjeuner', 9.99, 'cachan.png')">Ajouter au panier</button>
           </div>
         </div>
       </div>
