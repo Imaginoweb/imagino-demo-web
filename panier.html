@@ -143,6 +143,40 @@ function supprimerArticle(index) {
 }
 
 document.addEventListener('DOMContentLoaded', afficherPanier);
+async function inscrireUtilisateur() {
+    let email = document.getElementById('email').value;
+    let message = document.getElementById('messageValidation');
+
+    if (!email.includes('@')) {
+        message.innerText = "❌ Veuillez entrer une adresse email valide.";
+        return;
+    }
+
+    try {
+        let response = await fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?exact_email=${email}`, {
+            method: 'GET',
+            headers: {
+                'X-API-KEY': '2a79b8c4-b270-4a61-8b64-437ccea75586'
+            }
+        });
+
+        let data = await response.json();
+
+        if (data.length > 0) {  
+            message.style.color = "green";
+            message.innerText = "✅ Email valide ! Inscription en cours...";
+            setTimeout(() => { alert("Inscription réussie !"); }, 1000);
+        } else {
+            message.innerText = "❌ Cette adresse email n'existe pas.";
+        }
+
+    } catch (error) {
+        message.innerText = "❌ Erreur lors de la vérification. Réessayez plus tard.";
+        console.error("Erreur API:", error);
+    }
+}
+
+    
 </script>
 
 </body>
