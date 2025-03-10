@@ -55,7 +55,7 @@
     <h1>Bienvenue sur le site de démonstration CDP Imagino</h1>
   </header>
 
-  <!-- Section Présentation Clients & Solutions -->
+  <!-- Section Clients & Solutions -->
   <div class="container section">
     <h2>Nos Clients et Solutions</h2>
     <div class="row">
@@ -78,6 +78,46 @@
       </div>
       <div class="col-md-4">
         <img src="client3.png" class="img-fluid" alt="Client 3">
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Produits -->
+  <div class="container section">
+    <h2>Nos Produits</h2>
+    <div class="row">
+      <!-- Produit CDP -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="cdp.png" class="card-img-top" alt="CDP">
+          <div class="card-body">
+            <h5 class="card-title">CDP</h5>
+            <p class="card-text">Prix: 49.99 €</p>
+            <button class="btn btn-primary" onclick="addToCart('CDP', 49.99, 'cdp.png')">Ajouter au panier</button>
+          </div>
+        </div>
+      </div>
+      <!-- Produit Campaign -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="campaign.png" class="card-img-top" alt="Campaign">
+          <div class="card-body">
+            <h5 class="card-title">Campaign</h5>
+            <p class="card-text">Prix: 29.99 €</p>
+            <button class="btn btn-primary" onclick="addToCart('Campaign', 29.99, 'campaign.png')">Ajouter au panier</button>
+          </div>
+        </div>
+      </div>
+      <!-- Produit Petit Déjeuner -->
+      <div class="col-md-4">
+        <div class="card">
+          <img src="https://via.placeholder.com/300x200?text=Petit+Déjeuner" class="card-img-top" alt="Petit Déjeuner">
+          <div class="card-body">
+            <h5 class="card-title">Petit Déjeuner</h5>
+            <p class="card-text">Prix: 9.99 €</p>
+            <button class="btn btn-primary" onclick="addToCart('Petit Déjeuner', 9.99, 'https://via.placeholder.com/300x200?text=Petit+Déjeuner')">Ajouter au panier</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -148,26 +188,37 @@
       }
     });
 
+    // Fonction d'ajout d'un produit au panier
+    function addToCart(name, price, image) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const existingIndex = cart.findIndex(item => item.name === name);
+      if (existingIndex >= 0) {
+        cart[existingIndex].quantity += 1;
+      } else {
+        cart.push({ name, price, image, quantity: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(name + " a été ajouté au panier !");
+    }
+
     // Gestion du formulaire newsletter avec appel API vers Imagino
     document.getElementById('newsletterForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
-      // Récupération des valeurs du formulaire
       const firstName = document.getElementById('firstName').value;
       const lastName = document.getElementById('lastName').value;
       const email = document.getElementById('email').value;
       const telephone = document.getElementById('telephone').value;
       const dateOfBirth = document.getElementById('dateOfBirth').value;
       
-      // Construction du payload selon le schéma RCU-write
       const payload = {
-        Entreprise: 1,          // À ajuster selon vos besoins
-        WEB_ID: 1,              // À ajuster selon vos besoins
-        addressLine: "",        // Complétez si nécessaire
+        Entreprise: 1,
+        WEB_ID: 1,
+        addressLine: "",
         dateOfBirth: dateOfBirth,
         email: email,
         firstName: firstName,
-        gender: "non spécifié", // Valeur par défaut
+        gender: "non spécifié",
         lastModifiedDate: new Date().toISOString(),
         lastName: lastName,
         optInEmail: true,
@@ -177,7 +228,6 @@
         ucdId: ""
       };
 
-      // URL de l'API Imagino (basée sur Newcustomer.json)
       const apiEndpoint = 'https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU';
       const apiKey = '2a79b8c4-b270-4a61-8b64-437ccea75586';
 
