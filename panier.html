@@ -7,9 +7,23 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    body { padding-top: 70px; }
+    body { padding-top: 70px; display: flex; flex-direction: column; min-height: 100vh; }
     .navbar-brand img { height: 40px; }
     .section { padding: 30px 0; }
+    footer {
+      background-color: #343a40;
+      color: #ffffff;
+      padding: 20px 0;
+      margin-top: auto;
+    }
+    footer a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -45,11 +59,11 @@
     </div>
   </div>
 
-  <!-- Section Newsletter / Inscription (même formulaire) -->
+  <!-- Section Newsletter / Inscription dans une carte centrée -->
   <div class="container section">
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="card">
+        <div class="card" id="newsletterCard">
           <div class="card-header text-center">
             Inscription à la Newsletter
           </div>
@@ -85,6 +99,20 @@
       </div>
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer class="text-center">
+    <div class="container">
+      <p>© 2025 Demo CDP Imagino. Tous droits réservés.</p>
+      <p>
+        <a href="#">À propos</a> | 
+        <a href="#">Contact</a> | 
+        <a href="#">FAQ</a> | 
+        <a href="#">Mentions légales</a> | 
+        <a href="#">CGV</a>
+      </p>
+    </div>
+  </footer>
 
   <!-- Scripts JS -->
   <script>
@@ -187,13 +215,17 @@
         
         const data = await response.json();
         if (response.ok) {
-          document.getElementById('responseMessage').innerHTML = '<div class="alert alert-success">Inscription réussie ! ID généré : ' + (data.ucdId || 'N/A') + '</div>';
+          document.getElementById('responseMessage').innerHTML = 
+            '<div class="alert alert-success">Merci pour ton inscription ! Un email de confirmation a été envoyé à ' + email + '.</div>';
+          document.getElementById('newsletterCard').style.display = 'none';
         } else {
-          document.getElementById('responseMessage').innerHTML = '<div class="alert alert-danger">Erreur : ' + (data.error || 'Une erreur est survenue.') + '</div>';
+          document.getElementById('responseMessage').innerHTML = 
+            '<div class="alert alert-danger">Erreur : ' + (data.error || 'Une erreur est survenue.') + '</div>';
         }
       } catch (error) {
         console.error('Erreur :', error);
-        document.getElementById('responseMessage').innerHTML = '<div class="alert alert-danger">Erreur de connexion : ' + error.message + '</div>';
+        document.getElementById('responseMessage').innerHTML = 
+          '<div class="alert alert-danger">Erreur de connexion : ' + error.message + '</div>';
       }
     });
 
