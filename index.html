@@ -165,6 +165,38 @@ async function verifierEmail() {
         console.error("Erreur API:", error);
     }
 }
+async function inscrireUtilisateur() {
+    let email = document.getElementById('email').value;
+    let message = document.getElementById('messageValidation');
+
+    if (!email.includes('@')) {
+        message.innerText = "❌ Veuillez entrer une adresse email valide.";
+        return;
+    }
+
+    try {
+        let response = await fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?exact_email=${email}`, {
+            method: 'GET',
+            headers: {
+                'X-API-KEY': '2a79b8c4-b270-4a61-8b64-437ccea75586'
+            }
+        });
+
+        let data = await response.json();
+
+        if (data.length > 0) {  
+            message.style.color = "green";
+            message.innerText = "✅ Email valide ! Inscription en cours...";
+            setTimeout(() => { alert("Inscription réussie !"); }, 1000);
+        } else {
+            message.innerText = "❌ Cette adresse email n'existe pas.";
+        }
+
+    } catch (error) {
+        message.innerText = "❌ Erreur lors de la vérification. Réessayez plus tard.";
+        console.error("Erreur API:", error);
+    }
+}
 </script>
 <footer style="background-color: #f8f9fa; padding: 40px 0; font-family: Arial, sans-serif; color: #333;">
     <div style="display: flex; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: auto;">
