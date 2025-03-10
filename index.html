@@ -6,87 +6,50 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     <style>
         body { font-family: 'Poppins', Arial, sans-serif; margin:0; padding:0; background-color: #f4f7fc; }
-        header, footer { padding: 20px; text-align: center; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .container { display: flex; justify-content: center; flex-wrap: wrap; padding: 20px; }
-        .product { background: #fff; border-radius: 8px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: 15px; padding: 15px; width: 220px; text-align: center; display: flex; flex-direction: column; align-items: center; }
-        .product img { width: 150px; height: 150px; object-fit: contain; margin-bottom: 10px; }
-        .product strong, .product button { width: 100%; text-align: center; }
         .cart { position: fixed; top: 15px; right: 15px; background: #6D28D9; color: white; padding: 10px; border-radius: 4px; cursor: pointer; }
-        .cart-items-preview { display: none; position: absolute; right: 0; top: 40px; background: #fff; color: black; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 10; width: 250px; }
-        .cart:hover .cart-items-preview { display: block; }
-        .cart-item img { width: 30px; height: 30px; object-fit: contain; border-radius: 4px; }
-
-        /* Carrousel */
-        .carousel { display: flex; overflow: hidden; justify-content: center; gap: 20px; }
-        .carousel img { width: 300px; transition: transform 0.5s ease-in-out; }
+        .cart-preview { position: absolute; top: 40px; right: 0; background: white; border-radius: 8px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: none; }
+        .cart:hover .cart-preview { display: block; }
+        .cart-item img { width: 30px; height: 30px; object-fit: contain; }
+        .carousel { display: flex; overflow-x: auto; gap: 20px; justify-content: center; padding: 20px; }
+        .carousel img { width: 200px; }
     </style>
-    <script>
-        let panier = JSON.parse(localStorage.getItem('panier') || '[]');
-
-        function ajouterAuPanier(nom, prix, image) {
-            panier.push({ nom, prix, image });
-            localStorage.setItem('panier', JSON.stringify(panier));
-            afficherPanier();
-            alert(`${nom} a été ajouté au panier !`);
-        }
-
-        function afficherPanier() {
-            document.getElementById('cartCount').textContent = panier.length;
-            let preview = panier.map(item => `
-                <div class="cart-item">
-                    <img src="${item.image}" alt="${item.nom}">
-                    <span>${item.nom} - ${item.prix}€</span>
-                </div>
-            `).join('');
-            document.getElementById('cartPreview').innerHTML = preview || "<p>Panier vide</p>";
-        }
-
-        document.addEventListener('DOMContentLoaded', afficherPanier);
-    </script>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7PZPGN"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- Fin Google Tag Manager -->
 
 <header>
     <h1>Boutique Imagino 🛍️</h1>
 </header>
 
+<!-- Panier avec prévisualisation -->
 <div class="cart">
     <a href="panier.html">🛒 Panier : <span id="cartCount">0</span></a>
-    <div class="cart-items-preview" id="cartPreview"></div>
+    <div class="cart-preview" id="cartPreview"></div>
 </div>
 
 <div class="container">
     <div class="product">
         <img src="cdp.png" alt="CDP Imagino">
         <h3>Customer Data Platform</h3>
-        <p>Une CDP flexible et puissante.</p>
         <strong>99€</strong>
-        <button onclick="ajouterAuPanier('CDP Imagino', 99, 'cdp.png')">Ajouter au panier</button>
+        <button onclick="ajouterAuPanier('CDP Imagino', 99, 'cdp.png')">Ajouter</button>
     </div>
-
     <div class="product">
         <img src="campaign.png" alt="Imagino Campaign">
         <h3>Imagino Campaign</h3>
-        <p>Solution avancée de gestion de campagnes.</p>
         <strong>149€</strong>
-        <button onclick="ajouterAuPanier('Imagino Campaign', 149, 'campaign.png')">Ajouter au panier</button>
+        <button onclick="ajouterAuPanier('Imagino Campaign', 149, 'campaign.png')">Ajouter</button>
     </div>
-
     <div class="product">
         <img src="cachan.png" alt="Petit Déjeuner">
         <h3>Petit Déjeuner</h3>
-        <p>Un délicieux petit déjeuner à Cachan.</p>
         <strong>29€</strong>
-        <button onclick="ajouterAuPanier('Petit Déjeuner', 29, 'cachan.png')">Ajouter au panier</button>
+        <button onclick="ajouterAuPanier('Petit Déjeuner', 29, 'cachan.png')">Ajouter</button>
     </div>
 </div>
 
 <!-- Carrousel des références clients -->
-<section style="text-align: center; margin: 50px 0;">
+<section>
     <h2>Nos références clients</h2>
     <div class="carousel">
         <img src="client1.png" alt="Client 1">
@@ -95,93 +58,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 </section>
 
-<hr>
-
-<!-- Formulaire d'inscription à la newsletter -->
-<div style="text-align:center; padding:20px; background-color:#fff; margin-top:20px;">
+<!-- Inscription Newsletter -->
+<div style="text-align:center; padding:20px; background:#fff;">
     <h2>Inscription à la newsletter 📧</h2>
     <form id="newsletterForm">
         <input type="email" placeholder="Votre email" id="email" required>
-        <button type="button" onclick="verifierEmail()">S'inscrire</button>
+        <button type="button" onclick="inscrireUtilisateur()">S'inscrire</button>
     </form>
-    <p id="messageValidation" style="color: red; font-weight: bold;"></p>
+    <p id="messageValidation"></p>
 </div>
 
-<script>
-async function verifierEmail() {
-    let email = document.getElementById('email').value;
-    let message = document.getElementById('messageValidation');
-
-    if (!email.includes('@')) {
-        message.innerText = "Veuillez entrer une adresse email valide.";
-        return;
-    }
-
-    try {
-        let response = await fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?exact_email=${email}`, {
-            method: 'GET',
-            headers: {
-                'X-API-KEY': '2a79b8c4-b270-4a61-8b64-437ccea75586'
-            }
-        });
-
-        let data = await response.json();
-
-        if (data.length > 0) {  
-            message.style.color = "green";
-            message.innerText = "✅ Email valide ! Inscription en cours...";
-            setTimeout(() => { alert("Inscription réussie !"); }, 1000);
-        } else {
-            message.innerText = "❌ Cette adresse email n'existe pas.";
-        }
-
-    } catch (error) {
-        message.innerText = "Erreur lors de la vérification. Réessayez plus tard.";
-        console.error("Erreur API:", error);
-    }
-}
-async function inscrireUtilisateur() {
-    let email = document.getElementById('email').value;
-    let message = document.getElementById('messageValidation');
-
-    if (!email.includes('@')) {
-        message.innerText = "❌ Veuillez entrer une adresse email valide.";
-        return;
-    }
-
-    try {
-        let response = await fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?exact_email=${email}`, {
-            method: 'GET',
-            headers: {
-                'X-API-KEY': '2a79b8c4-b270-4a61-8b64-437ccea75586'
-            }
-        });
-
-        let data = await response.json();
-
-        if (data.length > 0) {  
-            message.style.color = "green";
-            message.innerText = "✅ Email valide ! Inscription en cours...";
-            setTimeout(() => { alert("Inscription réussie !"); }, 1000);
-        } else {
-            message.innerText = "❌ Cette adresse email n'existe pas.";
-        }
-
-    } catch (error) {
-        message.innerText = "❌ Erreur lors de la vérification. Réessayez plus tard.";
-        console.error("Erreur API:", error);
-    }
-}
-</script>
-<footer style="background-color: #f8f9fa; padding: 40px 0; font-family: Arial, sans-serif; color: #333;">
-    <div style="display: flex; justify-content: center; flex-wrap: wrap; max-width: 1200px; margin: auto;">
-        <div style="flex: 1; min-width: 250px; padding: 10px; text-align: left;">
-            <img src="logo.png" alt="Imagino Logo" style="width: 150px;">
-            <p><strong>+33 (0)1 84 04 09 00</strong></p>
-            <p>45-47 avenue Carnot<br>94230 Cachan<br>France</p>
-        </div>
-    </div>
+<footer>
+    <p>© Imagino – <a href="#">Mentions légales</a></p>
 </footer>
+
+<script>
+// Gestion du panier et vérification d'email
+let panier = JSON.parse(localStorage.getItem('panier') || '[]');
+function ajouterAuPanier(nom, prix, image) {
+    panier.push({ nom, prix, image });
+    localStorage.setItem('panier', JSON.stringify(panier));
+    afficherPanier();
+}
+function afficherPanier() {
+    document.getElementById('cartCount').textContent = panier.length;
+    let preview = panier.map(p => `<div><img src="${p.image}" alt="${p.nom}"> ${p.nom} - ${p.prix}€</div>`).join('');
+    document.getElementById('cartPreview').innerHTML = preview || "<p>Panier vide</p>";
+}
+document.addEventListener('DOMContentLoaded', afficherPanier);
+</script>
 
 </body>
 </html>
