@@ -86,6 +86,49 @@ function afficherPanier() {
     document.getElementById('cartPreview').innerHTML = preview || "<p>Panier vide</p>";
 }
 document.addEventListener('DOMContentLoaded', afficherPanier);
+async function inscrireUtilisateur() {
+    let email = document.getElementById('email').value.trim();
+    let message = document.getElementById('messageValidation');
+
+    if (!email.includes('@') || !email.includes('.')) {
+        message.style.color = "red";
+        message.innerText = "❌ Veuillez entrer une adresse email valide.";
+        return;
+    }
+
+    message.style.color = "blue";
+    message.innerText = "🔍 Vérification en cours...";
+
+    try {
+        let response = await fetch(`https://francois-sandbox.saas.imagino.com/ucdapi/New_customer/2/RCU?exact_email=${encodeURIComponent(email)}`, {
+            method: 'GET',
+            headers: {
+                'X-API-KEY': '2a79b8c4-b270-4a61-8b64-437ccea75586',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erreur API: ${response.status}`);
+        }
+
+        let data = await response.json();
+
+        if (data && data.length > 0) {
+            message.style.color = "green";
+            message.innerText = "✅ Email valide ! Inscription en cours...";
+            setTimeout(() => { alert("Inscription réussie !"); }, 1000);
+        } else {
+            message.style.color = "red";
+            message.innerText = "❌ Cette adresse email n'existe pas.";
+        }
+
+    } catch (error) {
+        message.style.color = "red";
+        message.innerText = "❌ Erreur lors de la vérification. Réessayez plus tard.";
+        console.error("Erreur API:", error);
+    }
+}
 </script>
 
 </body>
