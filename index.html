@@ -16,21 +16,11 @@
     .navbar-brand img {
       height: 40px;
     }
+    /* Bannière avec image sans texte */
     .banner {
       background: url('banner.png') no-repeat center center;
       background-size: cover;
       height: 300px;
-      position: relative;
-      color: white;
-      text-align: center;
-    }
-    .banner h1 {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.5);
-      padding: 10px 20px;
     }
     .section {
       padding: 30px 0;
@@ -75,10 +65,8 @@
     </div>
   </nav>
 
-  <!-- Bannière -->
-  <header class="banner">
-    <h1>Bienvenue sur le site de démonstration CDP Imagino</h1>
-  </header>
+  <!-- Bannière (image banner.png sans texte) -->
+  <header class="banner"></header>
 
   <!-- Section Produits -->
   <div class="container section">
@@ -90,7 +78,7 @@
           <img src="cdp.png" class="card-img-top" alt="CDP">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">CDP</h5>
-            <p class="card-text">La solution CDP vous permet de centraliser les données clients pour une gestion optimisée de vos campagnes marketing.</p>
+            <p class="card-text">La solution CDP centralise les données clients pour optimiser vos campagnes marketing.</p>
             <p class="card-text"><strong>Prix : 49.99 €</strong></p>
             <button class="btn btn-primary mt-auto" onclick="addToCart('CDP', 49.99, 'cdp.png')">Ajouter au panier</button>
           </div>
@@ -102,7 +90,7 @@
           <img src="campaign.png" class="card-img-top" alt="Campaign">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Campaign</h5>
-            <p class="card-text">Campaign est notre outil innovant pour créer, gérer et analyser vos campagnes publicitaires.</p>
+            <p class="card-text">Campaign vous aide à créer, gérer et analyser vos campagnes publicitaires.</p>
             <p class="card-text"><strong>Prix : 29.99 €</strong></p>
             <button class="btn btn-primary mt-auto" onclick="addToCart('Campaign', 29.99, 'campaign.png')">Ajouter au panier</button>
           </div>
@@ -114,7 +102,7 @@
           <img src="cachan.png" class="card-img-top" alt="Petit Déjeuner">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">Petit Déjeuner</h5>
-            <p class="card-text">Savourez un délicieux petit déjeuner pour bien commencer la journée avec notre offre gourmande.</p>
+            <p class="card-text">Un délicieux petit déjeuner pour bien commencer la journée.</p>
             <p class="card-text"><strong>Prix : 9.99 €</strong></p>
             <button class="btn btn-primary mt-auto" onclick="addToCart('Petit Déjeuner', 9.99, 'cachan.png')">Ajouter au panier</button>
           </div>
