@@ -73,19 +73,6 @@
 </footer>
 
 <script>
-// Gestion du panier et vérification d'email
-let panier = JSON.parse(localStorage.getItem('panier') || '[]');
-function ajouterAuPanier(nom, prix, image) {
-    panier.push({ nom, prix, image });
-    localStorage.setItem('panier', JSON.stringify(panier));
-    afficherPanier();
-}
-function afficherPanier() {
-    document.getElementById('cartCount').textContent = panier.length;
-    let preview = panier.map(p => `<div><img src="${p.image}" alt="${p.nom}"> ${p.nom} - ${p.prix}€</div>`).join('');
-    document.getElementById('cartPreview').innerHTML = preview || "<p>Panier vide</p>";
-}
-document.addEventListener('DOMContentLoaded', afficherPanier);
 async function inscrireUtilisateur() {
     let email = document.getElementById('email').value.trim();
     let message = document.getElementById('messageValidation');
