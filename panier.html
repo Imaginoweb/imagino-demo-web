@@ -9,22 +9,12 @@
   <style>
     body { padding-top: 70px; display: flex; flex-direction: column; min-height: 100vh; }
     .navbar-brand img { height: 40px; }
+    /* Bannière utilisant banner.png */
     .banner {
       background: url('banner.png') no-repeat center center;
       background-size: cover;
       height: 200px;
       position: relative;
-      color: white;
-      text-align: center;
-    }
-    .banner h1 {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.5);
-      padding: 5px 10px;
-      font-size: 1.5rem;
     }
     .section { padding: 30px 0; }
     footer {
@@ -64,9 +54,7 @@
   </nav>
 
   <!-- Bannière -->
-  <header class="banner">
-    <h1>Votre Panier</h1>
-  </header>
+  <header class="banner"></header>
 
   <!-- Section Panier -->
   <div class="container section">
